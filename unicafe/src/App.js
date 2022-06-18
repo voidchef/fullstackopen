@@ -5,21 +5,26 @@ const Statistics = (props) => {
   const total = good + neutral + bad;
   const average = (good * 1 + bad * -1) / total;
   const positive = (good * 100) / total;
-  return (
-    <div>
-      good {good}
-      <br />
-      neutral {neutral}
-      <br />
-      bad {bad}
-      <br />
-      all {total}
-      <br />
-      average {average}
-      <br />
-      positive {positive}
-    </div>
-  );
+
+  if (good === 0 && neutral === 0 && bad === 0) {
+    return <div>No feedback given</div>;
+  } else {
+    return (
+      <div>
+        good {good}
+        <br />
+        neutral {neutral}
+        <br />
+        bad {bad}
+        <br />
+        all {total}
+        <br />
+        average {average}
+        <br />
+        positive {positive}
+      </div>
+    );
+  }
 };
 
 const App = () => {
