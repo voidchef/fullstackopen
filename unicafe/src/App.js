@@ -18,12 +18,18 @@ const App = () => {
       <button onClick={() => handleClick("good")}>good</button>
       <button onClick={() => handleClick("neutral")}>neutral</button>
       <button onClick={() => handleClick("bad")}>bad</button>
-      <h1>statistics</h1> 
+      <h1>statistics</h1>
       good {good}
-      <br/>
+      <br />
       neutral {neutral}
-      <br/>
+      <br />
       bad {bad}
+      <br />
+      all {good + neutral + bad}
+      <br />
+      average {(good * 1 + bad * -1) / (good + neutral + bad)}
+      <br />
+      positive {(good * 100) / (good + neutral + bad)}
     </div>
   );
 };
