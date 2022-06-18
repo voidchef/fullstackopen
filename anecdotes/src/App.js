@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const Heading = ({text}) => <h1>{text}</h1>;
+
 const DisplayVotes = ({ votes }) => <p>has {votes} votes</p>;
 
 const DisplayAnecdote = ({ anecdote, votes }) => {
@@ -28,11 +30,18 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
+  const [mostVoted, setMostVoted] = useState({ anecdote: "", votes: 0 });
 
   const handleClickVote = () => {
     const newVotes = [...votes];
     newVotes[selected] += 1;
     setVotes(newVotes);
+
+    if (mostVoted.votes < newVotes[selected])
+      setMostVoted({
+        anecdote: anecdotes[selected],
+        votes: newVotes[selected],
+      });
   };
 
   const handleClickNext = () =>
@@ -40,9 +49,12 @@ const App = () => {
 
   return (
     <div>
+      <Heading text="Anecdote of the day" />
       <DisplayAnecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <Button handleClick={handleClickVote} text="vote" />
       <Button handleClick={handleClickNext} text="next anecdote" />
+      <Heading text="Anecdote with most votes" />
+      <DisplayAnecdote anecdote={mostVoted.anecdote} votes={mostVoted.votes} />
     </div>
   );
 };
