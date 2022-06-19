@@ -6,9 +6,14 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault();
-    const newPerson = { name: newName };
-    setPersons(persons.concat(newPerson));
-    setNewName("");
+
+    if (!persons.find(({ name }) => name === newName)) {
+      const newPerson = { name: newName };
+      setPersons(persons.concat(newPerson));
+      setNewName("");
+    } else {
+      alert(`${newName} is already added to the phonebook`);
+    }
   };
 
   const handleNameChange = (e) => setNewName(e.target.value);
