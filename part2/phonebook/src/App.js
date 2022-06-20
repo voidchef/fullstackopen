@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import services from "./services/services";
 import Services from "./services/services";
 
 const App = () => {
@@ -25,7 +24,22 @@ const App = () => {
         );
         setNewPerson({ name: "", number: "" });
       } else {
-        alert(`${newPerson.name} is already added to the phonebook`);
+        if (
+          window.confirm(
+            `${newPerson.name} is already added to the phonebook, replace the old number with a new one?`
+          )
+        ) {
+          const index = persons.findIndex(
+            (person) => person.name === newPerson.name
+          );
+          const id = persons[index].id;
+          Services.update(id, newPerson).then(() => {
+            setPersons(
+              persons.map((person) => (person.id !== id ? person : newPerson))
+            );
+            setNewPerson({ name: "", number: "" });
+          });
+        }
       }
     }
   };
@@ -38,8 +52,8 @@ const App = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
-    if (window.confirm(`Delete ${persons[id - 1].name}`)) {
+    const index = persons.findIndex((person) => person.id === id);
+    if (window.confirm(`Delete ${persons[index].name}`)) {
       Services.remove(id).then(() =>
         setPersons(persons.filter((person) => person.id !== id))
       );
