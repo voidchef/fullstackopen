@@ -26,10 +26,10 @@ function App() {
   }, [country, data]);
 
   return (
-    <div>
+    <>
       <Search country={country} onChange={handleChange} />
-      <SearchResult searchResult={searchResult} />
-    </div>
+      <SearchResult searchResult={searchResult} setCountry={setCountry} />
+    </>
   );
 }
 
