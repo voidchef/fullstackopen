@@ -15,11 +15,13 @@ const App = () => {
     });
   }, []);
 
-  const addName = (e) => {
+  const addPerson = (e) => {
     e.preventDefault();
     if (newPerson.name.length !== 0 && newPerson.number.length !== 0) {
       if (!persons.find(({ name }) => name === newPerson.name)) {
-        setPersons(persons.concat(newPerson));
+        axios
+          .post("http://localhost:3001/persons", newPerson)
+          .then((response) => setPersons(persons.concat(response.data)));
         setNewPerson({ name: "", number: "" });
       } else {
         alert(`${newPerson.name} is already added to the phonebook`);
@@ -46,7 +48,7 @@ const App = () => {
       <Filter value={filterName} onChange={handleFilterChange} />
       <h3>add a new</h3>
       <PersonForm
-        onSubmit={addName}
+        onSubmit={addPerson}
         name={newPerson.name}
         number={newPerson.number}
         onChange={handleInputChange}
