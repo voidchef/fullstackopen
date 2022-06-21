@@ -11,20 +11,21 @@ const Weather = ({ lat, lon }) => {
       )
       .then((response) => {
         setWeather(response.data);
-        console.log(response.data.main.temp)
       });
   }, []);
 
-  return (
-    <div>
-      <p>temperature {weather.main["temp"]} Celsius</p>
-      <img
-        src={`https://openweathermap.org/img/wn/${weather.weather[0]["icon"]}@4x.png`}
-        alt={weather.weather[0]["description"]}
-      ></img>
-      <p>wind {weather.wind["speed"]} m/s</p>
-    </div>
-  );
+  if (weather) {
+    return (
+      <div>
+        <p>temperature {weather.main.temp} Celsius</p>
+        <img
+          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
+          alt={weather.weather[0].description}
+        ></img>
+        <p>wind {weather.wind.speed} m/s</p>
+      </div>
+    );
+  }
 };
 
 export default Weather;
